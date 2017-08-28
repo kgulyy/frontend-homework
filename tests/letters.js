@@ -53,4 +53,21 @@ QUnit.module('Тестируем функцию letters', function () {
 		assert.strictEqual(letters('от топота копыт', false), 'а копыт');
 		assert.strictEqual(letters('hello world', false), 'he world');
 	});
+
+    QUnit.test('Оставляет без изменений строки, где одинаковые буквы разного регистра', function (assert) {
+        assert.strictEqual(letters('ABC abc'), 'ABC abc');
+        assert.strictEqual(letters('ABC abc', true), 'ABC abc');
+        assert.strictEqual(letters('ABC abc', false), 'ABC abc');
+    });
+
+    QUnit.test('Удаляет повторяющиеся буквы только одинакового регистра', function (assert) {
+        assert.strictEqual(letters('ABC abc ABC'), 'abc');
+        assert.strictEqual(letters('abc ABC abc'), 'ABC');
+
+        assert.strictEqual(letters('ABC abc ABC', true), 'ABC abc');
+        assert.strictEqual(letters('abc ABC abc', true), 'abc ABC');
+
+        assert.strictEqual(letters('ABC abc ABC', false), 'abc ABC');
+        assert.strictEqual(letters('abc ABC abc', false), 'ABC abc');
+    });
 });
